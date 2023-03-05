@@ -37,19 +37,28 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
                     </ul>
                     <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-                        @if (Route::has('login'))
+                        <!-- @if (Route::has('login'))
                         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                             @auth
                             <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                             @else
                             <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-
+                            @endif
                             @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                             @endif
                             @endauth
                         </div>
-                        @endif
+                        @endif -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
                     </div>
                 </div>
         </nav>
@@ -58,7 +67,7 @@
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Vive una realidad alternativa</h1>
-                    <img src="./components/img/portada.jpg" alt="..." width="450px" height="400px" />
+                    <img src="https://p4.wallpaperbetter.com/wallpaper/130/951/670/crowd-photography-concert-hd-wallpaper-preview.jpg" alt="..."  />
                     <p class="lead mb-0">Eventos donde y cuando tu quieras</p>
                 </div>
             </div>
@@ -86,7 +95,7 @@
                                         @endforeach
                                     </p>
                                     <div class="small text"> {{$evento -> description }}</div>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <a class="btn btn-primary" href="/eventos/{{$evento->id}}/infoEvento">Comprar →</a>
                                 </div>
                             </div>
                             @endforeach

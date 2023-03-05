@@ -29,7 +29,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        //Si eres admin te mando a Dashboard. Si eres usuario te mando a /senderos
+        if ($request->user()->role == "admin") {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else if ($request->user()->role == "creadorEventos") {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }else {
+            return redirect()->intended('/dashboardAsistente');
+        }
     }
 
     /**

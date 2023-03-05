@@ -10,26 +10,30 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Te has logeado como admin!") }}
+                @if (Auth::user()->role == "admin")
+                {{ __("Te has logeado como admin!") }}
+                @else 
+                {{ __("Te has logeado como creador!") }}
+                @endif
                 </div>
                 <a href="/eventos/nuevo"><button>Crear evento</button></a>
 
                 <!-- BUSCAR POR FECHA  -->
-                <form class="form-inline" action="/eventos/buscarFecha" method="post">
+                <form class="form-inline" action="/eventos/buscarFechaAdmin" method="post">
                 @csrf    
                 <input name="date" class="form-control mr-sm-2" type="date" placeholder="Buscar por " aria-label="Search">
 
                     <button class="" type="submit">Buscar</button>
                 </form>
                 <!-- BUSCAR POR CIUDAD  -->
-                <form class="form-inline" action="/eventos/buscarCiudad" method="post">
+                <form class="form-inline" action="/eventos/buscarCiudadAdmin" method="post">
                 @csrf    
                 <input name="city" class="form-control mr-sm-2" type="text" placeholder="Buscar por ciudad " aria-label="Search">
 
                     <button class="" type="submit">Buscar</button>
                 </form>
                 <!-- BUSCAR POR CATEGORIA  -->
-                <form class="form-inline" action="/eventos/buscarCategoria" method="post">
+                <form class="form-inline" action="/eventos/buscarCategoriaAdmin" method="post">
                 @csrf    
                 <input name="buscarCategoria" class="form-control mr-sm-2" type="text" placeholder="Buscar por categoria " aria-label="Search">
 
@@ -109,13 +113,19 @@
                                 @endif  
                                 @endforeach
                                 </td>
-                            
+                               
+                                @if(Auth::User()->role == "admin")
                                 <td class="px-6 py-4 text-right">
                                     <a href="/eventos/{{$evento->id}}/show" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">INFO</a>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <a href="/eventos/{{ $evento->id }}/destroy" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">BORRAR</a>
                                 </td>
+                                @else 
+                                <td class="px-6 py-4 text-right">
+                                    <a href="/eventos/{{$evento->id}}/show" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">INFO</a>
+                                </td>
+                                @endif
                             </tr>
                            
                             @endforeach

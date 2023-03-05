@@ -56,9 +56,11 @@
                                 <td class="px-6 py-4">
                                     {{$asistente -> phone }}
                                 </td>
+                               @if(Auth::User()->role == "admin" || Auth::User()->id_user == $evento->user_id)
                                 <td class="px-6 py-4 text-right">
-                                    <a href="/eventos/{{ $asistente->id }}/destroy" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">BORRAR</a>
+                                    <a href="/eventos/{{ $evento->id }}/eliminar/{{ $asistente->id }}/usuario" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">BORRAR</a>
                                 </td>
+                                @endif
                             </tr>
                            @endforeach
                         </tbody>

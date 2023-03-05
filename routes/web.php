@@ -32,14 +32,27 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard',[EventoController::class,'indexAdmin'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/eventos/{evento}/destroy',[EventoController::class,'destroy']);
     Route::get('/eventos/{evento}/show' , [EventoController::class, 'show']);
+    Route::get('eventos/{evento}/eliminar/{asistente}/usuario' , [EventoController::class, 'eliminar']);
     
     Route::get('/eventos/nuevo' , [EventoController::class, 'create']);
     Route::post('/eventos/guardar' , [EventoController::class, 'store']);
+    Route::post('/eventos/buscarFechaAdmin' , [EventoController::class, 'buscarFechaAdmin']);
+Route::post('/eventos/buscarCiudadAdmin' , [EventoController::class, 'buscarCiudadAdmin']);
+Route::post('/eventos/buscarCategoriaAdmin' , [EventoController::class, 'buscarCategoriaAdmin']);
 
-    Route::post('/eventos/buscarFecha' , [EventoController::class, 'buscarFecha']);
-    Route::post('/eventos/buscarCiudad' , [EventoController::class, 'buscarCiudad']);
-    Route::post('/eventos/buscarCategoria' , [EventoController::class, 'buscarCategoria']);
 });
+Route::middleware(['auth', 'role:creadorEventos'])->group(function () {
+});
+
+Route::post('/eventos/buscarFecha' , [EventoController::class, 'buscarFecha']);
+Route::post('/eventos/buscarCiudad' , [EventoController::class, 'buscarCiudad']);
+Route::post('/eventos/buscarCategoria' , [EventoController::class, 'buscarCategoria']);
+
 Route::get('/',[EventoController::class,'indexWelcome']);
+Route::get('/dashboardAsistente',[EventoController::class,'indexAsistente']);
+Route::get('eventos/{evento}/infoEvento',[EventoController::class,'infoEvento']);
+
+Route::post('eventos/inscribir/usuario',[EventoController::class,'inscribir']);
+Route::get('eventos/{evento}/desinscribir/{user}',[EventoController::class,'desinscribir']);
 
 require __DIR__.'/auth.php';

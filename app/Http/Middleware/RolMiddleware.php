@@ -16,7 +16,10 @@ class RolMiddleware
     public function handle(Request $request, Closure $next, $role): Response
     {
 
-      
+        if ($request->user()->rol=='admin' || $request->user()->rol=='creadorEventos') {
+            return $next($request);
+        }
+
         return $next($request);
     }
 }

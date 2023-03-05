@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\User;
 class evento extends Model
 {
+
     use HasFactory;
+    public $timestamps = false;
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_evento');

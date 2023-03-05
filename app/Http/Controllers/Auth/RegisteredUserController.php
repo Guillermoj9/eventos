@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -52,7 +52,13 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        //Si eres admin te mando a Dashboard. Si eres usuario te mando a 
+        if ($user->rol == "admin") {
+            return redirect(RouteServiceProvider::HOME);
+        } else if($user->rol == "creadorEventos") {
+            return redirect(RouteServiceProvider::HOME);
+        }else {
+            return redirect('/dashboardAsistente');
+        }
     }
 }
